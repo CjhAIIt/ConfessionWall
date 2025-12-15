@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.example.model.Confession" alias="Confession"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource="com/example/mapper/ConfessionMapper.xml"/>
+    </mappers>
+</configuration>
