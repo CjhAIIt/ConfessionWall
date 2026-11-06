@@ -187,7 +187,7 @@
 
 <script>
     // 后端接口基础地址
-    const BASE_URL = "http://localhost:8080/confession";
+    const BASE_URL = "/confession";
 
     // 页面加载完成后自动加载告白列表
     window.onload = function() {
@@ -253,7 +253,8 @@
     function loadConfessions() {
         const limit = document.getElementById("limitInput").value || 10;
         // 校验limit范围
-        const validLimit = Math.max(1, Math.min(100, parseInt(limit)));
+        const parsedLimit = Number.parseInt(limit, 10);
+        const validLimit = Number.isFinite(parsedLimit) ? Math.max(1, Math.min(100, parsedLimit)) : 10;
         document.getElementById("limitInput").value = validLimit;
 
         // 发送GET请求
@@ -296,8 +297,9 @@
                 }
             })
             .catch(error => {
-                document.getElementById("confessionContainer").innerHTML =
-                    `<div style="text-align:center; color:#e63946; padding:20px;">加载失败：${error.message}</div>`;
+                const errorBox = document.getElementById("confessionContainer");
+                errorBox.textContent = "加载失败，请稍后重试。";
+                errorBox.style.cssText = "text-align:center; color:#e63946; padding:20px;";
             });
     }
 

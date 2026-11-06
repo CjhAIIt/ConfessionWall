@@ -38,6 +38,12 @@ public class ConfessionController {
                 return ResponseEntity.badRequest().body(result);
             }
 
+            if (username.length() > 100 || message.length() > 2000) {
+                result.put("code", 400);
+                result.put("msg", "用户名长度不能超过100，告白内容不能超过2000字！");
+                return ResponseEntity.badRequest().body(result);
+            }
+
             Confession confession = new Confession();
             confession.setUsername(username);
             confession.setMessage(message);
@@ -48,7 +54,7 @@ public class ConfessionController {
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             result.put("code", 500);
-            result.put("msg", "告白失败：" + e.getMessage());
+            result.put("msg", "告白失败，请稍后重试。");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
@@ -77,7 +83,7 @@ public class ConfessionController {
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             result.put("code", 500);
-            result.put("msg", "查询失败：" + e.getMessage());
+            result.put("msg", "查询失败，请稍后重试。");
             result.put("data", null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
